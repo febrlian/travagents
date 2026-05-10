@@ -1,0 +1,51 @@
+{
+  "primitive": {
+    "charcoal": {
+      "900": "#0E1110",
+      "800": "#161A18",
+      "700": "#232927",
+      "600": "#5C625F",
+      "500": "#8A918D",
+      "400": "#B6BCB8",
+      "300": "#E4E7E5",
+      "200": "#F7F8F6",
+      "100": "#FFFFFF"
+    },
+    "emerald": {
+      "700": "#0F6D5B",
+      "600": "#2E7D5A",
+      "500": "#35A287",
+      "400": "#5BC9A3",
+      "300": "#D8ECE6",
+      "200": "#E8F5F0"
+    },
+    "gold": {
+      "600": "#B9852B",
+      "500": "#D4A14A"
+    },
+    "crimson": {
+      "600": "#A14C4C",
+      "500": "#C26B6B"
+    }
+  },
+  "typography": {
+    "hero": { "fontSize": 40, "fontWeight": "600", "lineHeight": 46, "letterSpacing": -0.8 },
+    "h1": { "fontSize": 32, "fontWeight": "600", "lineHeight": 38, "letterSpacing": -0.32 },
+    "h2": { "fontSize": 24, "fontWeight": "600", "lineHeight": 30, "letterSpacing": -0.24 },
+    "h3": { "fontSize": 20, "fontWeight": "500", "lineHeight": 26, "letterSpacing": 0 },
+    "body": { "fontSize": 16, "fontWeight": "400", "lineHeight": 26, "letterSpacing": 0 },
+    "body-sm": { "fontSize": 14, "fontWeight": "400", "lineHeight": 21, "letterSpacing": 0 },
+    "caption": { "fontSize": 12, "fontWeight": "500", "lineHeight": 17, "letterSpacing": 0.12 },
+    "overline": { "fontSize": 11, "fontWeight": "600", "lineHeight": 13, "letterSpacing": 0.66 }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 48,
+    "3xl": 64,
+    "4xl": 96
+  }
+}
