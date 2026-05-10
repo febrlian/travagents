@@ -1,9 +1,7 @@
 import { create } from 'zustand';
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
 import { isBefore, isAfter, subMinutes, addMinutes } from 'date-fns';
-
-export type PrayerName = 'Fajr' | 'Dhuhr' | 'Asr' | 'Maghrib' | 'Isha';
-export type PrayerStatus = 'preparation' | 'open' | 'closing' | 'missed' | 'completed' | 'upcoming';
+import { PrayerName, PrayerStatus } from '../types/models';
 
 export interface PrayerEvent {
   name: PrayerName;
