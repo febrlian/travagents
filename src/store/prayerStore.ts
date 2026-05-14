@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Coordinates, CalculationMethod, PrayerTimes } from 'adhan';
-import { isBefore, isAfter, subMinutes, addMinutes } from 'date-fns';
+import { subMinutes, addMinutes } from 'date-fns';
 import { PrayerName, PrayerStatus } from '../types/models';
 
 export interface PrayerEvent {
@@ -79,17 +79,23 @@ export const usePrayerStore = create<PrayerStore>((set, get) => ({
     let currentPrayer: PrayerEvent | null = null;
     let nextPrayer: PrayerEvent | null = null;
 
+    const nowTime = now.getTime();
+
     events.forEach(event => {
-       if (isBefore(now, event.preparationOpens)) {
+       const prepTime = event.preparationOpens.getTime();
+       const openTime = event.windowOpens.getTime();
+       const closeTime = event.windowCloses.getTime();
+
+       if (nowTime < prepTime) {
           // Future
           if (!nextPrayer && !currentPrayer) nextPrayer = event;
-       } else if (isAfter(now, event.preparationOpens) && isBefore(now, event.windowOpens)) {
+       } else if (nowTime > prepTime && nowTime < openTime) {
           event.status = 'preparation';
           currentPrayer = event;
-       } else if (isAfter(now, event.windowOpens) && isBefore(now, event.windowCloses)) {
+       } else if (nowTime > openTime && nowTime < closeTime) {
           event.status = 'open';
           currentPrayer = event;
-       } else if (isAfter(now, event.windowCloses) && !event.checkInTime) {
+       } else if (nowTime > closeTime && !event.checkInTime) {
           event.status = 'missed';
        }
     });
