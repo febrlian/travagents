@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -56,14 +56,17 @@ export function AnimatedHeatmap({ data }: AnimatedHeatmapProps) {
   const { width } = useWindowDimensions();
   const cols = Math.floor((width - 48) / (CELL_SIZE + CELL_MARGIN));
 
-  // Chunk data into columns (weeks)
-  const columns = [];
-  for (let i = 0; i < data.length; i += 7) {
-    columns.push(data.slice(i, i + 7));
-  }
+  const visibleColumns = useMemo(() => {
+    const maxColumns = Math.ceil(data.length / 7);
+    const startCol = Math.max(0, maxColumns - cols);
+    const startIndex = startCol * 7;
 
-  // Keep only the recent columns that fit on screen
-  const visibleColumns = columns.slice(Math.max(0, columns.length - cols));
+    const columns = [];
+    for (let i = startIndex; i < data.length; i += 7) {
+      columns.push(data.slice(i, i + 7));
+    }
+    return columns;
+  }, [data, cols]);
 
   return (
     <View style={styles.container}>
