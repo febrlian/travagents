@@ -7,11 +7,13 @@ import { Button } from '../../src/components/ui/Button';
 import { useCommunityStore } from '../../src/store/communityStore';
 import { communityApi } from '../../src/services/mock-api/communityApi';
 import { Users, MapPin, UserPlus } from 'lucide-react-native';
+import { useToastStore } from '../../src/store/toastStore';
 
 export default function CommunityScreen() {
   const { partners, circles, invitePartner } = useCommunityStore();
   const [loadingMasjids, setLoadingMasjids] = useState(true);
   const [masjids, setMasjids] = useState<any[]>([]);
+  const { showToast } = useToastStore();
 
   useEffect(() => {
     communityApi.fetchNearbyMasjids(0, 0).then(data => {
@@ -23,7 +25,7 @@ export default function CommunityScreen() {
   const handleInvite = async () => {
     // Mocking an invite process directly
     const res = await invitePartner('friend@example.com');
-    alert(res.message);
+    showToast(res.message, 'success');
   };
 
   return (
@@ -54,7 +56,7 @@ export default function CommunityScreen() {
                    <Typography variant="caption" color="muted">Consistency: {partner.consistencyScore}%</Typography>
                  </View>
                </View>
-               <Button variant="secondary" children="Nudge" onPress={() => alert('Nudge sent!')} />
+               <Button variant="secondary" children="Nudge" onPress={() => showToast('Nudge sent!', 'info')} />
              </View>
           </GlassCard>
         ))}
@@ -80,7 +82,7 @@ export default function CommunityScreen() {
                     Next Iqamah: {masjid.nextIqamah}
                   </Typography>
                 </View>
-                <Button variant="primary" children="Check-in" onPress={() => alert('Checked into Jamaah!')} />
+                <Button variant="primary" children="Check-in" onPress={() => showToast('Checked into Jamaah!', 'success')} />
               </View>
             </GlassCard>
           ))
