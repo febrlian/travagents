@@ -1,4 +1,5 @@
-import React from 'react';
+import { PrayerName } from "../../types/models";
+import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Typography } from '../ui/Typography';
 import { PrayerEvent } from '../../store/prayerStore';
@@ -14,10 +15,10 @@ import { format } from 'date-fns';
 
 interface TimelineItemProps {
   prayer: PrayerEvent;
-  onCheckIn: () => void;
+  onCheckIn: (prayerName: PrayerName) => void;
 }
 
-export function TimelineItem({ prayer, onCheckIn }: TimelineItemProps) {
+export const TimelineItem = memo(function TimelineItem({ prayer, onCheckIn }: TimelineItemProps) {
   const pulseScale = useSharedValue(1);
 
   React.useEffect(() => {
@@ -61,7 +62,7 @@ export function TimelineItem({ prayer, onCheckIn }: TimelineItemProps) {
   return (
     <TouchableOpacity
       activeOpacity={prayer.status === 'open' ? 0.7 : 1}
-      onPress={() => { if (prayer.status === 'open') onCheckIn() }}
+      onPress={() => { if (prayer.status === 'open') onCheckIn(prayer.name) }}
     >
       <View className="flex-row h-[72px] px-md">
 
@@ -98,4 +99,4 @@ export function TimelineItem({ prayer, onCheckIn }: TimelineItemProps) {
       </View>
     </TouchableOpacity>
   );
-}
+});

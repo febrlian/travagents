@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { PrayerName } from "../../src/types/models";
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Typography } from '../../src/components/ui/Typography';
@@ -42,6 +43,14 @@ export default function HomeScreen() {
     setReflectionVisible(false);
   };
 
+  const handleTimelineCheckIn = useCallback((prayerName: PrayerName) => {
+    checkInPrayer(prayerName);
+    recordCheckIn(false, false, false);
+    calculatePrayers(new Date());
+    startReflection(prayerName);
+    setReflectionVisible(true);
+  }, [checkInPrayer, recordCheckIn, calculatePrayers, startReflection]);
+
   const activePrayer = currentPrayer || nextPrayer;
 
   return (
@@ -64,14 +73,7 @@ export default function HomeScreen() {
              <TimelineItem
                key={prayer.name}
                prayer={prayer}
-               onCheckIn={() => {
-                  checkInPrayer(prayer.name);
-                  recordCheckIn(false, false, false);
-                  calculatePrayers(new Date());
-
-                  startReflection(prayer.name);
-                  setReflectionVisible(true);
-               }}
+               onCheckIn={handleTimelineCheckIn}
              />
           ))}
         </View>
