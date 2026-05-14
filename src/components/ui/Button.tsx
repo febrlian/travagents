@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, ActivityIndicator, TouchableOpacityProps, StyleSheet, Animated } from 'react-native';
+import { TouchableOpacity, ActivityIndicator, TouchableOpacityProps, StyleSheet, Animated, GestureResponderEvent } from 'react-native';
 import { Typography } from './Typography';
 import * as Haptics from 'expo-haptics';
 
@@ -43,7 +43,7 @@ export function Button({
     }).start();
   };
 
-  const handlePress = (e: any) => {
+  const handlePress = (e: GestureResponderEvent) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (onPress) onPress(e);
   };
