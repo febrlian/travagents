@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Typography } from '../../src/components/ui/Typography';
@@ -11,6 +11,7 @@ import { TimelineItem } from '../../src/components/cards/TimelineItem';
 import { AnimatedBottomSheet } from '../../src/components/ui/AnimatedBottomSheet';
 import { ReflectionComposer } from '../../src/components/ui/ReflectionComposer';
 import { Settings } from 'lucide-react-native';
+import { PrayerName } from '../../src/types/models';
 
 export default function HomeScreen() {
   const { prayers, nextPrayer, currentPrayer, calculatePrayers, checkInPrayer } = usePrayerStore();
@@ -42,6 +43,17 @@ export default function HomeScreen() {
     setReflectionVisible(false);
   };
 
+
+  const handleTimelineCheckIn = useCallback((prayerName: PrayerName) => {
+    // Typecast to any to avoid typescript errors as the types might need PrayerName specifically
+    checkInPrayer(prayerName);
+    recordCheckIn(false, false, false);
+    calculatePrayers(new Date());
+
+    startReflection(prayerName);
+    setReflectionVisible(true);
+  }, [checkInPrayer, recordCheckIn, calculatePrayers, startReflection]);
+
   const activePrayer = currentPrayer || nextPrayer;
 
   return (
@@ -64,14 +76,7 @@ export default function HomeScreen() {
              <TimelineItem
                key={prayer.name}
                prayer={prayer}
-               onCheckIn={() => {
-                  checkInPrayer(prayer.name);
-                  recordCheckIn(false, false, false);
-                  calculatePrayers(new Date());
-
-                  startReflection(prayer.name);
-                  setReflectionVisible(true);
-               }}
+               onCheckIn={handleTimelineCheckIn}
              />
           ))}
         </View>
