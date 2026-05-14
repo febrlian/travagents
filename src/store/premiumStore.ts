@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 
 interface PremiumStore {
+  isPremiumModalVisible: boolean;
+  openPremiumModal: () => void;
+  closePremiumModal: () => void;
   isPremium: boolean;
   togglePremium: () => void;
   checkFeatureAccess: (featureKey: string) => boolean;
@@ -8,6 +11,10 @@ interface PremiumStore {
 
 export const usePremiumStore = create<PremiumStore>((set, get) => ({
   isPremium: false,
+  isPremiumModalVisible: false,
+
+  openPremiumModal: () => set({ isPremiumModalVisible: true }),
+  closePremiumModal: () => set({ isPremiumModalVisible: false }),
 
   togglePremium: () => set(state => ({ isPremium: !state.isPremium })),
 

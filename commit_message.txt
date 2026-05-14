@@ -1,0 +1,6 @@
+🧹 [code health improvement] Trigger premium modal when feature gate access is denied
+
+🎯 **What:** Modified `featureGateService.withFeatureGate` to actually trigger a premium modal via `usePremiumStore.getState().openPremiumModal()` instead of just leaving a comment `// Optionally trigger a premium modal here`. Also added `isPremiumModalVisible` state to `premiumStore`.
+💡 **Why:** This makes the feature gate robust and prepares it for connecting the modal UI, drastically improving UX by converting silent warnings into actionable triggers without introducing messy global DOM dependencies. It improves maintainability by centralizing the modal visibility logic inside the respective store.
+✅ **Verification:** Verified by ensuring the code transpiles without issues via `tsc --noEmit`. No existing tests are present, but local inspection confirms type safety.
+✨ **Result:** The system is now ready to respond to premium access denials by visually prompting the user.
