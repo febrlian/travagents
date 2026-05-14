@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { usePremiumStore } from '../store/premiumStore';
 
 export const featureGateService = {
@@ -17,7 +18,7 @@ export const featureGateService = {
       if (fallback) {
         fallback();
       } else {
-        console.warn(`Access denied to premium feature: ${featureKey}`);
+        Alert.alert('Premium Feature', `Access denied to premium feature: ${featureKey}`);
         // Optionally trigger a premium modal here
       }
     }) as T;
