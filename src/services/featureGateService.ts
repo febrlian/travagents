@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import { usePremiumStore } from '../store/premiumStore';
 
 export const featureGateService = {
