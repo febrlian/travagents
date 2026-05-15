@@ -17,6 +17,8 @@ export const featureGateService = {
       }
       if (fallback) {
         fallback();
+      } else {
+        console.warn(`Feature access denied for '${featureKey}' and no fallback provided.`);
       }
     }) as T;
   }
